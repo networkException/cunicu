@@ -5,6 +5,8 @@ package main
 
 import (
 	"net"
+	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
@@ -41,9 +43,24 @@ func init() { //nolint:gochecknoinits
 }
 
 func signal(_ *cobra.Command, _ []string, opts *signalOptions) {
-	l, err := net.Listen("tcp", opts.listenAddress)
+	var protocol string
+
+	if strings.HasPrefix(opts.listenAddress, "/") || strings.HasPrefix(opts.listenAddress, "./") {
+		protocol = "unix"
+	} else {
+		protocol = "tcp"
+	}
+
+	l, err := net.Listen(protocol, opts.listenAddress)
 	if err != nil {
 		logger.Fatal("Failed to listen", zap.Error(err))
+	}
+
+	if protocol == "unix" {
+		err = os.Chmod(opts.listenAddress, 0222)
+		if err != nil {
+			logger.Fatal("Failed to set unix socket permissions", zap.Error(err))
+		}
 	}
 
 	// Disable TLS
