@@ -59,6 +59,11 @@ func NewServer(d *daemon.Daemon, socket string) (*Server, error) {
 		return nil, fmt.Errorf("failed to listen at %s: %w", socket, err)
 	}
 
+	err = os.Chmod(socket, 0222)
+	if err != nil {
+		return nil, fmt.Errorf("failed to set unix socket permissions: %w", err)
+	}
+
 	go func() {
 		if err := s.grpc.Serve(l); err != nil {
 			s.logger.Error("Failed to serve", zap.Error(err))
