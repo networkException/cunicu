@@ -155,6 +155,7 @@ type InterfaceSettings struct {
 	// Feature flags
 	DiscoverEndpoints bool `koanf:"discover_endpoints,omitempty"`
 	DiscoverPeers     bool `koanf:"discover_peers,omitempty"`
+	AutoConfig        bool `koanf:"auto_config",omitempty`
 	SyncConfig        bool `koanf:"sync_config,omitempty"`
 	SyncRoutes        bool `koanf:"sync_routes,omitempty"`
 	SyncHosts         bool `koanf:"sync_hosts,omitempty"`

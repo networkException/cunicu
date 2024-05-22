@@ -61,6 +61,7 @@ func (c *Config) flagProvider() koanf.Provider {
 		// Feature flags
 		"discover-peers":     "discover_peers",
 		"discover-endpoints": "discover_endpoints",
+		"auto-config":        "auto_config",
 		"sync-config":        "sync_config",
 		"sync-hosts":         "sync_hosts",
 		"sync-routes":        "sync_routes",
