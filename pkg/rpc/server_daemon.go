@@ -136,7 +136,7 @@ func (s *DaemonServer) GetStatus(_ context.Context, p *rpcproto.GetStatusParams)
 					return nil
 				}
 
-				qp := cp.Marshal()
+				qp := cp.Marshal().Redact()
 
 				if epi != nil {
 					if epp, ok := epi.Peers[cp]; ok {
@@ -146,7 +146,7 @@ func (s *DaemonServer) GetStatus(_ context.Context, p *rpcproto.GetStatusParams)
 				}
 
 				return qp
-			})
+			}).Redact()
 
 			if epi != nil {
 				qi.Ice = epi.Marshal()
@@ -290,7 +290,7 @@ func (s *DaemonServer) AddPeer(_ context.Context, params *rpcproto.AddPeerParams
 	// Create response
 	resp := &rpcproto.AddPeerResp{
 		Invitation: &rpcproto.Invitation{},
-		Interface:  i.Marshal(),
+		Interface:  i.Marshal().Redact(),
 	}
 
 	if community := crypto.Key(i.Settings.Community); community.IsSet() {
