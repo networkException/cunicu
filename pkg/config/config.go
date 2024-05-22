@@ -57,6 +57,7 @@ func New(flags *pflag.FlagSet) *Config {
 	// Feature flags
 	flags.BoolP("discover-endpoints", "E", true, "Enable ICE endpoint discovery")
 	flags.BoolP("discover-peers", "P", true, "Enable peer discovery")
+	flags.BoolP("auto-config", "A", true, "Enable auto configuration of allowed addresses")
 	flags.BoolP("sync-config", "C", true, "Enable synchronization of configuration files")
 	flags.BoolP("sync-hosts", "H", true, "Enable synchronization of /etc/hosts file")
 	flags.BoolP("sync-routes", "R", true, "Enable synchronization of AllowedIPs with Kernel routes")
