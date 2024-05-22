@@ -32,6 +32,10 @@ type Interface struct {
 }
 
 func New(i *daemon.Interface) (*Interface, error) {
+	if !i.Settings.AutoConfig {
+		return nil, daemon.ErrFeatureDeactivated
+	}
+
 	a := &Interface{
 		Interface: i,
 		logger:    log.Global.Named("autocfg").With(zap.String("intf", i.Name())),
